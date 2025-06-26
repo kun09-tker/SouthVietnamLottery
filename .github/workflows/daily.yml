@@ -2,7 +2,7 @@ name: Daily Lottery Scraper
 
 on:
   schedule:
-    - cron: '*/5 * * * *'   # 10h UTC = 17h VN
+    - cron: '*/10 * * * *'   # 10h UTC = 17h VN
   workflow_dispatch:       # Cho phép chạy tay
 
 jobs:
