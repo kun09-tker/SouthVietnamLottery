@@ -34,7 +34,7 @@ jobs:
           DB_PORT: ${{ secrets.DB_PORT }}
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: raw-data
           path: data/raw.json
@@ -77,7 +77,7 @@ jobs:
         run: python pipeline/extract_data.py
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: raw-data
           path: data/raw.json
@@ -106,7 +106,7 @@ jobs:
         run: pip install -r requirements/transform.txt
 
       - name: Download artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: raw-data
 
