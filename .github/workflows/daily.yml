@@ -11,6 +11,7 @@ on:
 jobs:
   fetch-database:
     if: github.event_name == 'push'
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
