@@ -2,7 +2,7 @@ name: Daily Lottery Collecting
 
 on:
   schedule:
-    - cron: '0 10 * * * *'   # 10h UTC = 17h VN
+    - cron: '0 10 * * *'   # 10h UTC = 17h VN
   workflow_dispatch:       # Cho phép chạy tay
 
 jobs:
