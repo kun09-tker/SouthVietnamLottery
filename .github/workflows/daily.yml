@@ -82,7 +82,7 @@ jobs:
           name: raw-data
           path: data/raw.json
 
-  transform-data:
+  merge-artifact:
     runs-on: ubuntu-latest
     needs:
       - fetch-database
@@ -93,6 +93,33 @@ jobs:
         (needs.fetch-database.result == 'success') ||
         (needs.extract-data.result == 'success')
       )
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download from fetch
+        if: needs.fetch-database.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: raw-data
+          path: data/
+
+      - name: Download from extract
+        if: needs.extract-data.result == 'success'
+        uses: actions/download-artifact@v4
+        with:
+          name: raw-data
+          path: data/
+
+      - name: Upload merged
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-data-merged
+          path: data/
+
+  transform-data:
+    runs-on: ubuntu-latest
+    needs: merge-artifact
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -108,7 +135,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: raw-data
+          name: raw-data-merged
+          path: data/
 
       - name: Transforming data
         run: python pipeline/transform_data.py
