@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: raw-data
+          name: raw-data-fetch
           path: data/raw.json
 
   crawl_data:
@@ -79,7 +79,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: raw-data
+          name: raw-data-extract
           path: data/raw.json
 
   merge-artifact:
@@ -101,15 +101,15 @@ jobs:
         if: needs.fetch-database.result == 'success'
         uses: actions/download-artifact@v4
         with:
-          name: raw-data
-          path: data/
+          name: raw-data-fetch
+          path: data/fetch/
 
       - name: Download from extract
         if: needs.extract-data.result == 'success'
         uses: actions/download-artifact@v4
         with:
-          name: raw-data
-          path: data/
+          name: raw-data-extract
+          path: data/extract/
 
       - name: Upload merged
         uses: actions/upload-artifact@v4
