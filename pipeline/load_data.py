@@ -22,14 +22,14 @@ def load_data(raw_data, transform_data):
                 CREATE TABLE IF NOT EXISTS raw (
                     id SERIAL PRIMARY KEY,
                     raw_data TEXT,
-                    crawl_date TIMESTAMP UNIQUE,
+                    crawl_date TIMESTAMP,
                     extract_data TEXT
                 );
 
                 CREATE TABLE IF NOT EXISTS lottery_draw (
                     id SERIAL PRIMARY KEY,
                     raw_id INTEGER REFERENCES raw(id),
-                    draw_date DATE UNIQUE
+                    draw_date DATE
                 );
 
                 CREATE TABLE IF NOT EXISTS lottery_result (
