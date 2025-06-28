@@ -26,6 +26,12 @@ jobs:
 
       - name: Fetching html data
         run: python pipeline/fetch_database.py
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_PORT: ${{ secrets.DB_PORT }}
 
   crawl_data:
     if: github.event_name == 'schedule'
