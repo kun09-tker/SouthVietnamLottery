@@ -27,7 +27,7 @@ jobs:
       - name: Fetching html data
         run: python pipeline/fetch_database.py
 
-  crawl-data:
+  crawl_data:
     if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
     steps:
