@@ -37,7 +37,6 @@ def load_data(raw_data, transform_data):
                     id SERIAL PRIMARY KEY,
                     draw_id INTEGER REFERENCES lottery_draw(id),
                     city TEXT,
-                    code TEXT,
                     prize_level TEXT,
                     numbers TEXT[]
                 );
@@ -67,19 +66,20 @@ def load_data(raw_data, transform_data):
             draw_id = cur.fetchone()[0]
             for city_result in transform_data.get("results"):
                 city = city_result.get("city")
-                code = city_result.get("code")
 
                 for prize in ["giai8","giai7","giai6","giai5","giai4","giai3","giai2","giai1","giaidb"]:
                     numbers = None
                     numbers = city_result.get(prize, [])
                     cur.execute(
                         """
-                        INSERT INTO lottery_result (draw_id, city, code, prize_level, numbers)
-                        VALUES (%s, %s, %s, %s, %s)
+                        INSERT INTO lottery_result (draw_id, city, prize_level, numbers)
+                        VALUES (%s, %s, %s, %s)
                         """,
-                        (draw_id, city, code, prize, numbers)
+                        (draw_id, city, prize, numbers)
                     )
 
+    conn.commit()
+    cur.close()
     conn.close()
 
 if __name__ == "__main__":
