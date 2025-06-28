@@ -75,6 +75,12 @@ jobs:
     needs:
       - fetch-database
       - extract-data
+    if: |
+      always() &&
+      (
+        needs.fetch-database.result == 'success' ||
+        needs.extract-data.result == 'success'
+      )
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
