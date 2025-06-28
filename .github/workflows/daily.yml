@@ -1,4 +1,4 @@
-name: Daily Lottery Scraper
+name: Daily Lottery Collecting
 
 on:
   schedule:
