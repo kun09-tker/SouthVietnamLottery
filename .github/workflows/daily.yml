@@ -2,12 +2,15 @@ name: Daily Lottery Collecting
 
 on:
   schedule:
-    - cron: '0 10 * * *'   # 10h UTC = 17h VN
+    - cron: '0 10 * * *'   # 10h UTC = 17h
+  push:
+    branches:
+      - main
   workflow_dispatch:       # Cho phép chạy tay
 
 jobs:
-  fetch-data:
-    runs-on: ubuntu-latest
+  fetch-database:
+    if: github.event_name == 'push'
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -21,11 +24,30 @@ jobs:
         run: pip install -r requirements/fetch.txt
 
       - name: Fetching html data
-        run: python pipeline/fetch_data.py
+        run: python pipeline/fetch_database.py
+
+  crawl-data:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: pip install -r requirements/crawl.txt
+
+      - name: Fetching html data
+        run: python pipeline/crawl_data.py
 
   extract-data:
+    if: github.event_name == 'schedule'
     runs-on: ubuntu-latest
-    needs: fetch-data
+    needs: crawl_data
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -43,7 +65,9 @@ jobs:
 
   transform-data:
     runs-on: ubuntu-latest
-    needs: extract-data
+    needs:
+      - fetch-database
+      - extract-data
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3

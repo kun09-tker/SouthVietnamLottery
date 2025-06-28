@@ -6,6 +6,8 @@
     https://www.minhngoc.net.vn/ket-qua-xo-so/mien-nam.html
     table.bkqmiennam[0]
 
+    https://supabase.com/dashboard/project/kqnomikuczplckuqcybu/database/schemas
+
 - **Công cụ cào dữ liệu:**
 
     ***Python:*** Sử dụng thư viện Selenium để cào dữ liệu từ các trang web.
