@@ -2,7 +2,7 @@ name: Daily Lottery Collecting
 
 on:
   schedule:
-    - cron: '0 13 * * *'
+    - cron: '59 16 * * *'
   push:
     branches:
       - main
