@@ -138,27 +138,27 @@ jobs:
       - name: Transforming data
         run: python pipeline/transform_data.py
 
-  load-data-schedule:
-    if: github.event_name != 'push'
-    runs-on: ubuntu-latest
-    needs: transform-data-schedule
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+  # load-data-schedule:
+  #   if: github.event_name != 'push'
+  #   runs-on: ubuntu-latest
+  #   needs: transform-data-schedule
+  #   steps:
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.10"
+  #     - name: Set up Python
+  #       uses: actions/setup-python@v4
+  #       with:
+  #         python-version: "3.10"
 
-      - name: Install dependencies
-        run: pip install -r requirements/load.txt
+  #     - name: Install dependencies
+  #       run: pip install -r requirements/load.txt
 
-      - name: Loading data
-        run: python pipeline/load_data.py
-        env:
-          DB_HOST: ${{ secrets.DB_HOST }}
-          DB_NAME: ${{ secrets.DB_NAME }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
-          DB_PORT: ${{ secrets.DB_PORT }}
+  #     - name: Loading data
+  #       run: python pipeline/load_data.py
+  #       env:
+  #         DB_HOST: ${{ secrets.DB_HOST }}
+  #         DB_NAME: ${{ secrets.DB_NAME }}
+  #         DB_USER: ${{ secrets.DB_USER }}
+  #         DB_PASS: ${{ secrets.DB_PASS }}
+  #         DB_PORT: ${{ secrets.DB_PORT }}

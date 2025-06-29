@@ -37,4 +37,5 @@ if __name__ == "__main__":
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(datas, f, ensure_ascii=False, indent=2)
 
+    print(f"datas: {datas}")
     print(f"✅ Extracted data saved to {OUTPUT_FILE}")

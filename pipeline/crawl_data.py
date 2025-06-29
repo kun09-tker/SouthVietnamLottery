@@ -23,6 +23,7 @@ def crawl_data():
         'table_html': [table],
         'date_crawl': [datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
     }
+    print(f"datas: {data}")
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
 

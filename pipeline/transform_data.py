@@ -51,6 +51,7 @@ if __name__ == "__main__":
     extract_datas = datas.get('extract_data')
     for text in extract_datas:
         transform_datas.append(transform_data(text))
-
+    print(f"datas: {datas}")
+    print(f"transform_datas: {transform_datas}")
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(transform_datas, f, ensure_ascii=False, indent=2)

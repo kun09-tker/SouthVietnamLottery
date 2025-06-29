@@ -49,7 +49,6 @@ def fetch_database():
 
     return datas
 
-
 if __name__ == "__main__":
     datas = fetch_database()
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
