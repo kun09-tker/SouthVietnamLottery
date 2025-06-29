@@ -157,10 +157,10 @@ jobs:
       - name: Extracting info from html data
         run: python pipeline/extract_data.py
 
-      - name: Upload artifact
+      - name: Upload artifact extract
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data
+          name: shared-data-extract
           path: data/data.json
 
   transform-data-schedule:
@@ -179,10 +179,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/transform.txt
 
-      - name: Download artifact
+      - name: Download artifact extract
         uses: actions/download-artifact@v4
         with:
-          name: shared-data
+          name: shared-data-extract
 
       - name: Transforming data
         run: python pipeline/transform_data.py
