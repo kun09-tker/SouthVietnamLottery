@@ -68,9 +68,8 @@ jobs:
 
       - name: Move data to workspace
         run: |
-          rm -rf data
-          ls
-          mv shared-data/data data
+          mkdir -p data
+          mv data.json transform.json data/
 
       - name: Transforming data
         run: python pipeline/transform_data.py
@@ -104,8 +103,8 @@ jobs:
 
       - name: Move data to workspace
         run: |
-          rm -rf data
-          mv shared-data/data data
+          mkdir -p data
+          mv data.json transform.json data/
 
       - name: Loading data
         run: python pipeline/load_data.py
@@ -168,8 +167,8 @@ jobs:
 
       - name: Move data to workspace
         run: |
-          rm -rf data
-          mv shared-data/data data
+          mkdir -p data
+          mv data.json transform.json data/
 
       - name: Extracting info from html data
         run: python pipeline/extract_data.py
@@ -203,8 +202,8 @@ jobs:
 
       - name: Move data to workspace
         run: |
-          rm -rf data
-          mv shared-data/data data
+          mkdir -p data
+          mv data.json transform.json data/
 
       - name: Transforming data
         run: python pipeline/transform_data.py
@@ -238,8 +237,8 @@ jobs:
 
       - name: Move data to workspace
         run: |
-          rm -rf data
-          mv shared-data/data data
+          mkdir -p data
+          mv data.json transform.json data/
 
       - name: Loading data
         run: python pipeline/load_data.py
