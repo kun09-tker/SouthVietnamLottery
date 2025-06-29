@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data
-          path: data/data.json
+          path: data
 
   transform-data-push:
     if: github.event_name == 'push'
@@ -72,8 +72,8 @@ jobs:
       - name: Upload artifact transform
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data-transform
-          path: data/transform.json
+          name: shared-data
+          path: data
 
   load-data-push:
     if: github.event_name == 'push'
@@ -95,11 +95,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: shared-data
-
-      - name: Download artifact transform
-        uses: actions/download-artifact@v4
-        with:
-          name: shared-data-transform
 
       - name: Loading data
         run: python pipeline/load_data.py
