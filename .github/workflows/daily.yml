@@ -27,9 +27,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/fetch.txt
 
-      - name: Create a location to store data files
-        run: mkdir data && touch data/data.json data/transform.json
-
       - name: Fetching html data
         run: python pipeline/fetch_database.py
         env:
@@ -42,7 +39,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data
+          name: data
           path: data
 
   transform-data-push:
@@ -64,7 +61,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: shared-data
+          name: data
 
       - name: Transforming data
         run: python pipeline/transform_data.py
@@ -72,7 +69,7 @@ jobs:
       - name: Upload artifact transform
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data
+          name: data
           path: data
 
   load-data-push:
@@ -94,7 +91,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: shared-data
+          name: data
 
       - name: Loading data
         run: python pipeline/load_data.py
@@ -122,17 +119,14 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/crawl.txt
 
-      - name: Create a location to store data files
-        run: mkdir data && touch data/data.json data/transform.json
-
       - name: Fetching html data
         run: python pipeline/crawl_data.py
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data
-          path: data/data.json
+          name: data
+          path: data
 
   extract-data:
     if: github.event_name != 'push'
@@ -153,7 +147,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: shared-data
+          name: data
 
       - name: Extracting info from html data
         run: python pipeline/extract_data.py
@@ -161,8 +155,8 @@ jobs:
       - name: Upload artifact extract
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data-extract
-          path: data/data.json
+          name: data
+          path: data
 
   transform-data-schedule:
     if: github.event_name != 'push'
@@ -183,16 +177,16 @@ jobs:
       - name: Download artifact extract
         uses: actions/download-artifact@v4
         with:
-          name: shared-data-extract
+          name: data
 
       - name: Transforming data
         run: python pipeline/transform_data.py
 
-      - name: Upload artifact transform
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data-transform
-          path: data/transform.json
+          name: data
+          path: data
 
   load-data-schedule:
     if: github.event_name != 'push'
@@ -213,12 +207,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: shared-data
-
-      - name: Download artifact transform
-        uses: actions/download-artifact@v4
-        with:
-          name: shared-data-transform
+          name: data
 
       - name: Loading data
         run: python pipeline/load_data.py
