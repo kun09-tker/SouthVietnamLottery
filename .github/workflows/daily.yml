@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/fetch.txt
 
+      - name: Create a location to store data files
+        run: mkdir data && touch data/data.json data/transform.json
+
       - name: Fetching html data
         run: python pipeline/fetch_database.py
         env:
@@ -118,6 +121,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements/crawl.txt
+
+      - name: Create a location to store data files
+        run: mkdir data && touch data/data.json data/transform.json
 
       - name: Fetching html data
         run: python pipeline/crawl_data.py
