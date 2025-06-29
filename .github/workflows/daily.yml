@@ -77,7 +77,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data
+          name: shared-data-transform
           path: data
 
   load-data-push:
@@ -99,7 +99,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: shared-data
+          name: shared-data-transform
 
       - name: Move data to workspace
         run: |
@@ -176,7 +176,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data
+          name: shared-data-extract
           path: data
 
   transform-data-schedule:
@@ -198,7 +198,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: shared-data
+          name: shared-data-extract
 
       - name: Move data to workspace
         run: |
@@ -211,7 +211,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: shared-data
+          name: shared-data-transform
           path: data
 
   load-data-schedule:
@@ -233,7 +233,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: shared-data
+          name: shared-data-transform
 
       - name: Move data to workspace
         run: |
