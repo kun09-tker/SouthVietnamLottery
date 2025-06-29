@@ -2,7 +2,7 @@ name: Daily Lottery Collecting
 
 on:
   schedule:
-    - cron: '59 16 * * *' #23h59
+    - cron: '59 16 * * *' #23h59 cung ngay
   push:
     branches:
       - main
