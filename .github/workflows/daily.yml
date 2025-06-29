@@ -40,7 +40,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data
-          path: data/data.json
+          path: data
 
   transform-data-push:
     if: github.event_name == 'push'
@@ -70,7 +70,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data-transform
-          path: data/transform.json
+          path: data
 
   load-data-push:
     if: github.event_name == 'push'
@@ -131,7 +131,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data
-          path: data/data.json
+          path: data
 
   extract-data:
     if: github.event_name != 'push'
@@ -161,7 +161,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data-extract
-          path: data/data.json
+          path: data
 
   transform-data-schedule:
     if: github.event_name != 'push'
@@ -191,7 +191,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data-transform
-          path: data/transform.json
+          path: data
 
   load-data-schedule:
     if: github.event_name != 'push'
