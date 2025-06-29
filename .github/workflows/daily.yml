@@ -36,6 +36,12 @@ jobs:
           DB_PASS: ${{ secrets.DB_PASS }}
           DB_PORT: ${{ secrets.DB_PORT }}
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-data
+          path: data/data.json
+
   transform-data-push:
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
@@ -52,8 +58,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/transform.txt
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: shared-data
+
       - name: Transforming data
         run: python pipeline/transform_data.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-data-transform
+          path: data/transform.json
 
   load-data-push:
     if: github.event_name == 'push'
@@ -70,6 +87,13 @@ jobs:
 
       - name: Install dependencies
         run: pip install -r requirements/load.txt
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name:
+            - shared-data
+            - shared-data-transform
 
       - name: Loading data
         run: python pipeline/load_data.py
@@ -100,6 +124,12 @@ jobs:
       - name: Fetching html data
         run: python pipeline/crawl_data.py
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-data
+          path: data/data.json
+
   extract-data:
     if: github.event_name != 'push'
     runs-on: ubuntu-latest
@@ -116,8 +146,19 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/extract.txt
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: shared-data
+
       - name: Extracting info from html data
         run: python pipeline/extract_data.py
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-data
+          path: data/data.json
 
   transform-data-schedule:
     if: github.event_name != 'push'
@@ -135,30 +176,48 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/transform.txt
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: shared-data
+
       - name: Transforming data
         run: python pipeline/transform_data.py
 
-  # load-data-schedule:
-  #   if: github.event_name != 'push'
-  #   runs-on: ubuntu-latest
-  #   needs: transform-data-schedule
-  #   steps:
-  #     - name: Checkout repo
-  #       uses: actions/checkout@v3
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-data-transform
+          path: data/transform.json
 
-  #     - name: Set up Python
-  #       uses: actions/setup-python@v4
-  #       with:
-  #         python-version: "3.10"
+  load-data-schedule:
+    if: github.event_name != 'push'
+    runs-on: ubuntu-latest
+    needs: transform-data-schedule
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
 
-  #     - name: Install dependencies
-  #       run: pip install -r requirements/load.txt
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
 
-  #     - name: Loading data
-  #       run: python pipeline/load_data.py
-  #       env:
-  #         DB_HOST: ${{ secrets.DB_HOST }}
-  #         DB_NAME: ${{ secrets.DB_NAME }}
-  #         DB_USER: ${{ secrets.DB_USER }}
-  #         DB_PASS: ${{ secrets.DB_PASS }}
-  #         DB_PORT: ${{ secrets.DB_PORT }}
+      - name: Install dependencies
+        run: pip install -r requirements/load.txt
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name:
+            - shared-data
+            - shared-data-transform
+
+      - name: Loading data
+        run: python pipeline/load_data.py
+        env:
+          DB_HOST: ${{ secrets.DB_HOST }}
+          DB_NAME: ${{ secrets.DB_NAME }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_PORT: ${{ secrets.DB_PORT }}
