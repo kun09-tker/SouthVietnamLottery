@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/fetch.txt
 
+      - name: Create a location to store data files
+        run: touch data/data.json data/transform.json
+
       - name: Fetching html data
         run: python pipeline/fetch_database.py
         env:
@@ -40,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data
-          path: data
+          path: data/data.json
 
   transform-data-push:
     if: github.event_name == 'push'
@@ -70,7 +73,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data-transform
-          path: data
+          path: data/transform.json
 
   load-data-push:
     if: github.event_name == 'push'
@@ -124,6 +127,9 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/crawl.txt
 
+      - name: Create a location to store data files
+        run: touch data/data.json data/transform.json
+
       - name: Fetching html data
         run: python pipeline/crawl_data.py
 
@@ -131,7 +137,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data
-          path: data
+          path: data/data.json
 
   extract-data:
     if: github.event_name != 'push'
@@ -161,7 +167,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data-extract
-          path: data
+          path: data/data.json
 
   transform-data-schedule:
     if: github.event_name != 'push'
@@ -191,7 +197,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: shared-data-transform
-          path: data
+          path: data/transform.json
 
   load-data-schedule:
     if: github.event_name != 'push'
