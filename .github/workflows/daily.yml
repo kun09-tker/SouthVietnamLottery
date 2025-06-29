@@ -69,6 +69,7 @@ jobs:
       - name: Move data to workspace
         run: |
           rm -rf data
+          ls
           mv shared-data/data data
 
       - name: Transforming data
