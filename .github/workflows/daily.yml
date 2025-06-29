@@ -42,7 +42,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: data
+          name: shared-data
           path: data
 
   transform-data-push:
@@ -64,15 +64,20 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: data
+          name: shared-data
+
+      - name: Move data to workspace
+        run: |
+          rm -rf data
+          mv shared-data/data data
 
       - name: Transforming data
         run: python pipeline/transform_data.py
 
-      - name: Upload artifact transform
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: data
+          name: shared-data
           path: data
 
   load-data-push:
@@ -94,7 +99,12 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: data
+          name: shared-data
+
+      - name: Move data to workspace
+        run: |
+          rm -rf data
+          mv shared-data/data data
 
       - name: Loading data
         run: python pipeline/load_data.py
@@ -131,7 +141,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: data
+          name: shared-data
           path: data
 
   extract-data:
@@ -153,15 +163,20 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: data
+          name: shared-data
+
+      - name: Move data to workspace
+        run: |
+          rm -rf data
+          mv shared-data/data data
 
       - name: Extracting info from html data
         run: python pipeline/extract_data.py
 
-      - name: Upload artifact extract
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: data
+          name: shared-data
           path: data
 
   transform-data-schedule:
@@ -180,10 +195,15 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements/transform.txt
 
-      - name: Download artifact extract
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: data
+          name: shared-data
+
+      - name: Move data to workspace
+        run: |
+          rm -rf data
+          mv shared-data/data data
 
       - name: Transforming data
         run: python pipeline/transform_data.py
@@ -191,7 +211,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: data
+          name: shared-data
           path: data
 
   load-data-schedule:
@@ -213,7 +233,12 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: data
+          name: shared-data
+
+      - name: Move data to workspace
+        run: |
+          rm -rf data
+          mv shared-data/data data
 
       - name: Loading data
         run: python pipeline/load_data.py
